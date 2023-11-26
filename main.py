@@ -13,7 +13,7 @@ def main(page):
     page.title = 'Stopwatch'
     
     # theme
-    page.theme_mode = 'dark'
+    page.theme_mode = 'light'
     
     # window geometry
     page.window_height = 300
@@ -56,15 +56,49 @@ def main(page):
     
     def change_page(e):
         selected_page = e.control.selected_index
-        if selected_page == 0:
+        if selected_page == 0: # main page is opened
             main_page.visible = True
             about_page.visible = False
-        elif selected_page == 1:
+            settings_page.visible = False
+        elif selected_page == 1: # settings page is opened
+            main_page.visible = False
+            about_page.visible = False
+            settings_page.visible = True
+        elif selected_page == 2: # settings page is opened
             main_page.visible = False
             about_page.visible = True
+            settings_page.visible = False
         page.update()
         page.drawer.open = False # closing the drawer
         page.drawer.update()
+    
+    
+    def set_light_theme_mode():
+        page.theme_mode = 'light'
+        
+        # all other ui elements got auto-updated with the above statement
+        # so, no need to bother about them
+        button_reset.color = '#eeeef1'
+        button_reset.bgcolor = '#43474e'
+        page.update()
+        
+    
+    def set_dark_theme_mode():
+        page.theme_mode = 'dark'
+        
+        # comment is given in the above defined function
+        button_reset.color = '#272a2c'
+        button_reset.bgcolor = '#c3c7cf'
+        page.update()
+    
+    
+    def change_theme_mode(e):
+        print(dropdown_theme_menu.value)
+        if dropdown_theme_menu.value == 'Dark':
+            set_dark_theme_mode()
+        elif dropdown_theme_menu.value == 'Light':
+            set_light_theme_mode()
+        page.update()
     
     
     digital_clock = ft.Text(str(datetime.timedelta(seconds=0)), size=60)
@@ -85,6 +119,12 @@ def main(page):
         selected_icon_content=ft.Icon(ft.icons.HOME_SHARP)
     )
     
+    navigation_drawer_settings = ft.NavigationDrawerDestination(
+        label='Settings',
+        icon=ft.icons.SETTINGS_OUTLINED,
+        selected_icon_content=ft.Icon(ft.icons.SETTINGS_SHARP)
+    )
+    
     navigation_drawer_about = ft.NavigationDrawerDestination(
         label='About',
         icon=ft.icons.LIGHTBULB_OUTLINED,
@@ -100,6 +140,14 @@ def main(page):
         ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
     ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, visible=True)
     
+    dropdown_theme_menu = ft.Dropdown(label='Theme', options=[
+            ft.dropdown.Option('Light'),
+            ft.dropdown.Option('Dark')], on_change=change_theme_mode)
+    
+    settings_page = ft.Row([       # Theme Related
+        ft.Text('Theme: '),
+        dropdown_theme_menu
+    ], visible=False)
     
     about_page = ft.Row([ft.Column([
         ft.Text(value='Written By:', size=40),
@@ -109,11 +157,13 @@ def main(page):
     
     page.drawer = ft.NavigationDrawer(controls=[
         navigation_drawer_home,
+        navigation_drawer_settings,
+        ft.Divider(thickness=1),
         navigation_drawer_about
     ], selected_index=0, on_change=change_page)
     
     page.add(drawer_button)
-    page.add(ft.Column([main_page, about_page]))
+    page.add(ft.Column([main_page, settings_page, about_page]))
 
 
 if __name__ == '__main__':
