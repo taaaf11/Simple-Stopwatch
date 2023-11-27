@@ -23,7 +23,7 @@ def main(page):
     
     def start_watch(e):
         global seconds_passed, is_clock_running, running_clock_instances
-        if running_clock_instances == 1: # indicates that function has called before
+        if running_clock_instances == 1: # indicates that function has been called before once
             return
         if is_clock_running == False:
             is_clock_running = True
@@ -93,10 +93,9 @@ def main(page):
     
     
     def change_theme_mode(e):
-        print(dropdown_theme_menu.value)
-        if dropdown_theme_menu.value == 'Dark':
+        if dropdown_theme_menu_settings.value == 'Dark':
             set_dark_theme_mode()
-        elif dropdown_theme_menu.value == 'Light':
+        elif dropdown_theme_menu_settings.value == 'Light':
             set_light_theme_mode()
         page.update()
     
@@ -105,7 +104,7 @@ def main(page):
     
     button_start = ft.IconButton(icon=ft.icons.START_SHARP, on_click=start_watch)  # start button
     button_stop  = ft.IconButton(icon=ft.icons.STOP_CIRCLE_SHARP, on_click=stop_watch)  # stop button
-    button_reset = ft.ElevatedButton(text='0', on_click=reset_watch, color='#272a2c', bgcolor='#c3c7cf')  # reset button
+    button_reset = ft.ElevatedButton(text='0', on_click=reset_watch, color='#eeeef1', bgcolor='#43474e')  # reset button
     
     drawer_button = ft.Row([
             ft.IconButton(icon=ft.icons.MENU, on_click=show_drawer)],
@@ -140,14 +139,14 @@ def main(page):
         ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
     ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, visible=True)
     
-    dropdown_theme_menu = ft.Dropdown(label='Theme', options=[
+    dropdown_theme_menu_settings = ft.Dropdown(label='Theme', options=[
             ft.dropdown.Option('Light'),
             ft.dropdown.Option('Dark')], on_change=change_theme_mode)
     
     settings_page = ft.Row([       # Theme Related
         ft.Text('Theme: '),
-        dropdown_theme_menu
-    ], visible=False)
+        dropdown_theme_menu_settings
+    ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER, visible=False)
     
     about_page = ft.Row([ft.Column([
         ft.Text(value='Written By:', size=40),
