@@ -1,4 +1,4 @@
-from ui_components import Stopwatch, AboutPage
+from ui_components import Stopwatch
 import flet as ft
 
 
@@ -78,7 +78,12 @@ def main(page: ft.Page):
 
     home_view = Stopwatch()
     
-    about_view = AboutPage('Muhammad Altaaf', visible=False)
+    about_view = ft.Column([
+        ft.Text('Written by:', size=40),
+        ft.Text('Muhammad Altaaf', size=30),
+        ft.Container(content=ft.Divider(thickness=2), width=40),
+        ft.OutlinedButton(icon=ft.icons.LINK_ROUNDED, text='Source code')
+    ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, visible=False)
     
     page.add(home_view, about_view)
 
