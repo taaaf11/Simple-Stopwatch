@@ -1,6 +1,10 @@
 # Simple-Stopwatch
 Stopwatch in python using flet framework.
 
+# Screenshot
+![image](https://github.com/taaaf11/Simple-Stopwatch/assets/109919009/d1a45ac5-678e-466a-8c94-2f49fc62efbc)
+
+
 ## Run it!
 1. Clone the repo or download zip.
 2. Navigate to the cloned directory or to the extracted directory.
