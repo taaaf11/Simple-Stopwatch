@@ -89,7 +89,13 @@ def main(page: ft.Page):
             ft.Text("Written by:", size=40),
             ft.Text("Muhammad Altaaf", size=30),
             ft.Container(content=ft.Divider(thickness=2), width=40),
-            ft.OutlinedButton(icon=ft.icons.LINK_ROUNDED, text="Source code"),
+            ft.OutlinedButton(
+                icon=ft.icons.LINK_ROUNDED,
+                text="Source code",
+                on_click=lambda _: page.launch_url(
+                    "https://github.com/taaaf11/Simple-Stopwatch"
+                ),
+            ),
         ],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         visible=False,
